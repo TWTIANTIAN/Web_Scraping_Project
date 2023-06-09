@@ -77,10 +77,16 @@ for i in range(1, 10):
             discount = "No Discount"
 
         avg_rating = driver.find_element(By.XPATH, "//div[contains(@class, '_3LWZlK')]").text
-        rating_count_review_coun = driver.find_element(By.XPATH, "//span[contains(@class, '_2_R_DZ')]").text
-        rating_count = rating_count_review_coun.split("&")[0]
-        review_count = rating_count_review_coun.split("&")[1]
-
+        try:
+            rating_count_review_coun = driver.find_element(By.XPATH, "//span[contains(@class, '_2_R_DZ')]").text
+            review_count = rating_count_review_coun.split("&")[1]
+            rating_count = rating_count_review_coun.split("&")[0]
+        except NoSuchElementException:
+            review_count = None
+            rating_count = None
+        except IndexError:
+            review_count = None
+            rating_count = None
         # Initialize variables for optional fields
         processor = "N/A"
         screen_dimension = "N/A"
